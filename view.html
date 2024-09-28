@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Users</title>
+</head>
+<body>
+    <h2>All Users</h2>
+    <button onclick="viewAllUsers()">View All Users</button>
+    <div id="all_users"></div>
+
+    <script>
+        function viewAllUsers() {
+            const allUsers = document.getElementById('all_users');
+            allUsers.innerHTML = '<h2>All Users</h2>';
+
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                const user = JSON.parse(localStorage.getItem(key));
+                allUsers.innerHTML += `<p>First Name: ${user.firstName}, Last Name Initial: ${user.lastInitial}, Date of Birth: ${user.dob}, Email: ${user.email}, Derp Coins: ${user.derpCoins}, Role: ${user.role}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
