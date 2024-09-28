@@ -17,7 +17,7 @@
                 const key = localStorage.key(i);
                 const user = JSON.parse(localStorage.getItem(key));
                 if (user && user.email) {
-                    allUsers.innerHTML += `<p>First Name: ${user.firstName}, Last Name Initial: ${user.lastInitial}, Date of Birth: ${user.dob}, Email: ${user.email}, Derp Coins: ${user.derpCoins}, Role: ${user.role} <button onclick="giftGodlyDerp('${user.email}')">Gift Godly Derp</button></p>`;
+                    allUsers.innerHTML += `<p>First Name: ${user.firstName}, Last Name Initial: ${user.lastInitial}, Date of Birth: ${user.dob}, Email: ${user.email}, Derp Coins: ${user.derpCoins}, Role: ${user.role} <button onclick="giftGodlyDerp('${user.email}')">Gift Godly Derp</button> <button onclick="removeGodlyDerp('${user.email}')">Remove Godly Derp</button> <button onclick="banUser('${user.email}')">Ban User</button></p>`;
                 }
             }
         }
@@ -32,6 +32,24 @@
             } else {
                 alert('User not found.');
             }
+        }
+
+        function removeGodlyDerp(email) {
+            const user = JSON.parse(localStorage.getItem(email));
+            if (user) {
+                user.role = 'New Derp';
+                localStorage.setItem(email, JSON.stringify(user));
+                alert(`Removed Godly Derp role from ${user.firstName}`);
+                viewAllUsers();
+            } else {
+                alert('User not found.');
+            }
+        }
+
+        function banUser(email) {
+            localStorage.removeItem(email);
+            alert(`Banned user with email: ${email}`);
+            viewAllUsers();
         }
     </script>
 </body>
