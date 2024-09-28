@@ -10,7 +10,7 @@ form = cgi.FieldStorage()
 search_name = form.getvalue('search_name')
 
 # Search for the user
-c.execute("SELECT * FROM users WHERE first_name=?", (search_name,))
+c.execute("SELECT first_name, last_initial, dob, email, derp_coins, role FROM users WHERE first_name=?", (search_name,))
 rows = c.fetchall()
 
 print("Content-type:text/html\r\n\r\n")
@@ -22,7 +22,7 @@ print("<body>")
 print("<h2>Search Results</h2>")
 if rows:
     for row in rows:
-        print(f"<p>First Name: {row[0]}, Last Name Initial: {row[1]}, Date of Birth: {row[2]}, Email: {row[3]}</p>")
+        print(f"<p>First Name: {row[0]}, Last Name Initial: {row[1]}, Date of Birth: {row[2]}, Email: {row[3]}, Derp Coins: {row[4]}, Role: {row[5]}</p>")
 else:
     print("<p>No user found</p>")
 print("</body>")
