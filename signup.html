@@ -5,7 +5,7 @@
 </head>
 <body>
     <h2>Signup Form</h2>
-    <form action="signup.py" method="post">
+    <form id="signupForm">
         <label for="first_name">First Name:</label><br>
         <input type="text" id="first_name" name="first_name"><br><br>
         <label for="last_initial">Last Name Initial:</label><br>
@@ -18,10 +18,49 @@
     </form>
 
     <h2>Login</h2>
-    <form action="login.py" method="post">
+    <form id="loginForm">
         <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email"><br><br>
+        <input type="email" id="login_email" name="email"><br><br>
         <input type="submit" value="Login">
     </form>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const firstName = document.getElementById('first_name').value;
+            const lastInitial = document.getElementById('last_initial').value;
+            const dob = document.getElementById('dob').value;
+            const email = document.getElementById('email').value;
+
+            const user = {
+                firstName: firstName,
+                lastInitial: lastInitial,
+                dob: dob,
+                email: email,
+                derpCoins: 0,
+                role: email === 'hamptonlogan562@gmail.com' ? 'Godly Derp' : 'New Derp'
+            };
+
+            localStorage.setItem(email, JSON.stringify(user));
+            alert('Signup Successful');
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('login_email').value;
+            const user = JSON.parse(localStorage.getItem(email));
+
+            if (user) {
+                alert(`Welcome, ${user.firstName} (${user.role})`);
+                if (user.role === 'Godly Derp') {
+                    window.location.href = 'search.html';
+                } else {
+                    window.location.href = 'chat.html';
+                }
+            } else {
+                alert('Login Failed: User not found.');
+            }
+        });
+    </script>
 </body>
 </html>
