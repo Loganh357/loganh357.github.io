@@ -19,7 +19,8 @@
 
     <script>
         let clicks = 1;
-        const user = JSON.parse(localStorage.getItem(localStorage.getItem('currentUser')));
+        const currentUserEmail = localStorage.getItem('currentUser');
+        const user = JSON.parse(localStorage.getItem(currentUserEmail));
         let derpCoins = user.derpCoins;
 
         document.getElementById('derp_coins').innerText = derpCoins;
