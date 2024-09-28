@@ -42,7 +42,9 @@
             };
 
             localStorage.setItem(email, JSON.stringify(user));
+            localStorage.setItem('currentUser', email);
             alert('Signup Successful');
+            window.location.href = 'chat.html';
         });
 
         document.getElementById('loginForm').addEventListener('submit', function(event) {
@@ -51,6 +53,7 @@
             const user = JSON.parse(localStorage.getItem(email));
 
             if (user) {
+                localStorage.setItem('currentUser', email);
                 alert(`Welcome, ${user.firstName} (${user.role})`);
                 if (user.role === 'Godly Derp') {
                     window.location.href = 'search.html';
