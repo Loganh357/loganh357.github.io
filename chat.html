@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Page</title>
+</head>
+<body>
+    <h2>Chat</h2>
+    <div id="chat_box"></div>
+    <input type="text" id="message" placeholder="Type your message...">
+    <button onclick="sendMessage()">Send</button>
+
+    <h2>Game</h2>
+    <button onclick="earnDerpCoin()">Earn Derp Coin</button>
+    <p>Derp Coins: <span id="derp_coins">0</span></p>
+
+    <h2>Shop</h2>
+    <button onclick="buyDerpCoins()">Buy Derp Coins</button>
+
+    <script>
+        let derpCoins = 0;
+
+        function sendMessage() {
+            const message = document.getElementById('message').value;
+            const chatBox = document.getElementById('chat_box');
+            chatBox.innerHTML += `<p>${message}</p>`;
+            document.getElementById('message').value = '';
+        }
+
+        function earnDerpCoin() {
+            derpCoins += 1;
+            document.getElementById('derp_coins').innerText = derpCoins;
+        }
+
+        function buyDerpCoins() {
+            derpCoins += 10;
+            document.getElementById('derp_coins').innerText = derpCoins;
+        }
+    </script>
+</body>
+</html>
