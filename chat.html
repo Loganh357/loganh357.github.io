@@ -12,29 +12,60 @@
     <h2>Game</h2>
     <button onclick="earnDerpCoin()">Earn Derp Coin</button>
     <p>Derp Coins: <span id="derp_coins">0</span></p>
+    <p>Role: <span id="user_role"></span></p>
 
     <h2>Shop</h2>
     <button onclick="buyDerpCoins()">Buy Derp Coins</button>
 
     <script>
-        let derpCoins = 0;
+        let clicks = 1;
+        const user = JSON.parse(localStorage.getItem(localStorage.getItem('currentUser')));
+        let derpCoins = user.derpCoins;
+
+        document.getElementById('derp_coins').innerText = derpCoins;
+        document.getElementById('user_role').innerText = user.role;
 
         function sendMessage() {
             const message = document.getElementById('message').value;
             const chatBox = document.getElementById('chat_box');
-            chatBox.innerHTML += `<p>${message}</p>`;
+            chatBox.innerHTML += `<p><strong>${user.firstName} (${user.role}):</strong> ${message}</p>`;
             document.getElementById('message').value = '';
+            saveChat();
         }
 
         function earnDerpCoin() {
-            derpCoins += 1;
+            derpCoins += clicks;
+            user.derpCoins = derpCoins;
+            localStorage.setItem(user.email, JSON.stringify(user));
             document.getElementById('derp_coins').innerText = derpCoins;
         }
 
         function buyDerpCoins() {
-            derpCoins += 10;
-            document.getElementById('derp_coins').innerText = derpCoins;
+            if (derpCoins >= 5) {
+                derpCoins -= 5;
+                clicks += 1;
+                user.derpCoins = derpCoins;
+                localStorage.setItem(user.email, JSON.stringify(user));
+                document.getElementById('derp_coins').innerText = derpCoins;
+                alert('You have successfully bought more clicks!');
+            } else {
+                alert('Not enough derp coins to buy more clicks.');
+            }
         }
+
+        function saveChat() {
+            const chatBox = document.getElementById('chat_box').innerHTML;
+            localStorage.setItem('chat', chatBox);
+        }
+
+        function loadChat() {
+            const chatBox = localStorage.getItem('chat');
+            if (chatBox) {
+                document.getElementById('chat_box').innerHTML = chatBox;
+            }
+        }
+
+        window.onload = loadChat;
     </script>
 </body>
 </html>
