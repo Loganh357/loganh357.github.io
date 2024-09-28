@@ -5,7 +5,7 @@ conn = sqlite3.connect('signup.db')
 c = conn.cursor()
 
 # Retrieve all users
-c.execute("SELECT * FROM users")
+c.execute("SELECT first_name, last_initial, dob, email, derp_coins, role FROM users")
 rows = c.fetchall()
 
 print("Content-type:text/html\r\n\r\n")
@@ -16,7 +16,7 @@ print("</head>")
 print("<body>")
 print("<h2>All Users</h2>")
 for row in rows:
-    print(f"<p>First Name: {row[0]}, Last Name Initial: {row[1]}, Date of Birth: {row[2]}, Email: {row[3]}</p>")
+    print(f"<p>First Name: {row[0]}, Last Name Initial: {row[1]}, Date of Birth: {row[2]}, Email: {row[3]}, Derp Coins: {row[4]}, Role: {row[5]}</p>")
 print("</body>")
 print("</html>")
 
