@@ -28,6 +28,13 @@
         <input type="submit" value="Login">
     </form>
 
+    <h2>Reset Password</h2>
+    <form id="resetPasswordForm">
+        <label for="reset_email">Email:</label><br>
+        <input type="email" id="reset_email" name="reset_email"><br><br>
+        <input type="submit" value="Reset Password">
+    </form>
+
     <script>
         document.getElementById('signupForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -69,6 +76,21 @@
                 }
             } else {
                 alert('Login Failed: Incorrect email or password.');
+            }
+        });
+
+        document.getElementById('resetPasswordForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('reset_email').value;
+            const user = JSON.parse(localStorage.getItem(email));
+
+            if (user) {
+                const resetLink = `http://example.com/reset_password.html?email=${encodeURIComponent(email)}`;
+                alert(`A reset password link has been sent to ${email}.`);
+                // Simulate sending email
+                console.log(`Reset password link: ${resetLink}`);
+            } else {
+                alert('User not found.');
             }
         });
     </script>
