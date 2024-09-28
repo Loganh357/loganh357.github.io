@@ -14,6 +14,8 @@
         <input type="date" id="dob" name="dob"><br><br>
         <label for="email">Email:</label><br>
         <input type="email" id="email" name="email"><br><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br><br>
         <input type="submit" value="Sign Up">
     </form>
 
@@ -21,6 +23,8 @@
     <form id="loginForm">
         <label for="email">Email:</label><br>
         <input type="email" id="login_email" name="email"><br><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="login_password" name="password"><br><br>
         <input type="submit" value="Login">
     </form>
 
@@ -31,12 +35,14 @@
             const lastInitial = document.getElementById('last_initial').value;
             const dob = document.getElementById('dob').value;
             const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
 
             const user = {
                 firstName: firstName,
                 lastInitial: lastInitial,
                 dob: dob,
                 email: email,
+                password: password,
                 derpCoins: 0,
                 role: email === 'hamptonlogan562@gmail.com' ? 'Godly Derp' : 'New Derp'
             };
@@ -50,9 +56,10 @@
         document.getElementById('loginForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const email = document.getElementById('login_email').value;
+            const password = document.getElementById('login_password').value;
             const user = JSON.parse(localStorage.getItem(email));
 
-            if (user) {
+            if (user && user.password === password) {
                 localStorage.setItem('currentUser', email);
                 alert(`Welcome, ${user.firstName} (${user.role})`);
                 if (user.role === 'Godly Derp') {
@@ -61,7 +68,7 @@
                     window.location.href = 'chat.html';
                 }
             } else {
-                alert('Login Failed: User not found.');
+                alert('Login Failed: Incorrect email or password.');
             }
         });
     </script>
