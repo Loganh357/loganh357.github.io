@@ -1,24 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>All Users</title>
+    <title>Reset Password</title>
 </head>
 <body>
-    <h2>All Users</h2>
-    <button onclick="viewAllUsers()">View All Users</button>
-    <div id="all_users"></div>
+    <h2>Reset Password</h2>
+    <form id="resetPasswordForm">
+        <label for="password">New Password:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="Reset Password">
+    </form>
 
     <script>
-        function viewAllUsers() {
-            const allUsers = document.getElementById('all_users');
-            allUsers.innerHTML = '<h2>All Users</h2>';
+        document.getElementById('resetPasswordForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+            const password = document.getElementById('password').value;
+            const user = JSON.parse(localStorage.getItem(email));
 
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                const user = JSON.parse(localStorage.getItem(key));
-                allUsers.innerHTML += `<p>First Name: ${user.firstName}, Last Name Initial: ${user.lastInitial}, Date of Birth: ${user.dob}, Email: ${user.email}, Derp Coins: ${user.derpCoins}, Role: ${user.role}</p>`;
+            if (user) {
+                user.password = password;
+                localStorage.setItem(email, JSON.stringify(user));
+                alert('Password reset successfully');
+                window.location.href = 'chat.html';
+            } else {
+                alert('User not found.');
             }
-        }
+        });
     </script>
 </body>
 </html>
