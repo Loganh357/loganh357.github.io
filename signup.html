@@ -86,7 +86,7 @@
 
             if (user) {
                 const resetLink = `reset_password.html?email=${encodeURIComponent(email)}`;
-                alert(`A reset password link has been generated: ${resetLink}`);
+                alert(`To decode a token, put in the content before the @ and use %40 before gmail.com, but after the content before the @.`);
                 // Display the reset link to the user
                 const resetLinkElement = document.createElement('p');
                 resetLinkElement.innerHTML = `Click <a href="${resetLink}">here</a> to reset your password.`;
