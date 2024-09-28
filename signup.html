@@ -85,8 +85,8 @@
             const user = JSON.parse(localStorage.getItem(email));
 
             if (user) {
-                const resetLink = `http://example.com/reset_password.html?email=${encodeURIComponent(email)}`;
-                alert(`A reset password link has been sent to ${email}.`);
+                const resetLink = `reset_password.html?email=${encodeURIComponent(email)}`;
+                alert(`A reset password link has been generated: ${resetLink}`);
                 // Simulate sending email
                 console.log(`Reset password link: ${resetLink}`);
             } else {
