@@ -21,9 +21,9 @@
 
     <h2>Login</h2>
     <form id="loginForm">
-        <label for="email">Email:</label><br>
+        <label for="login_email">Email:</label><br>
         <input type="email" id="login_email" name="email"><br><br>
-        <label for="password">Password:</label><br>
+        <label for="login_password">Password:</label><br>
         <input type="password" id="login_password" name="password"><br><br>
         <input type="submit" value="Login">
     </form>
@@ -87,8 +87,10 @@
             if (user) {
                 const resetLink = `reset_password.html?email=${encodeURIComponent(email)}`;
                 alert(`A reset password link has been generated: ${resetLink}`);
-                // Simulate sending email
-                console.log(`Reset password link: ${resetLink}`);
+                // Display the reset link to the user
+                const resetLinkElement = document.createElement('p');
+                resetLinkElement.innerHTML = `Click <a href="${resetLink}">here</a> to reset your password.`;
+                document.body.appendChild(resetLinkElement);
             } else {
                 alert('User not found.');
             }
