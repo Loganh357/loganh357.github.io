@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Role</title>
+</head>
+<body>
+    <h2>Update Role</h2>
+    <form id="updateRoleForm">
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email"><br><br>
+        <label for="derp_coins">Derp Coins:</label><br>
+        <input type="number" id="derp_coins" name="derp_coins"><br><br>
+        <input type="submit" value="Update Role">
+    </form>
+
+    <script>
+        function updateRole(email, derpCoins) {
+            let role = 'New Derp';
+            if (derpCoins >= 1000000000) {
+                role = 'Master Derp';
+            } else if (derpCoins >= 1000000) {
+                role = 'Rare Derp';
+            } else if (derpCoins >= 20000) {
+                role = 'Classic Derp';
+            } else if (email === 'hamptonlogan562@gmail.com') {
+                role = 'Godly Derp';
+            }
+            return role;
+        }
+
+        document.getElementById('updateRoleForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const derpCoins = parseInt(document.getElementById('derp_coins').value);
+            const user = JSON.parse(localStorage.getItem(email));
+
+            if (user) {
+                user.derpCoins = derpCoins;
+                user.role = updateRole(email, derpCoins);
+                localStorage.setItem(email, JSON.stringify(user));
+                alert(`Role Updated to ${user.role}`);
+            } else {
+                alert('User not found.');
+            }
+        });
+    </script>
+</body>
+</html>
