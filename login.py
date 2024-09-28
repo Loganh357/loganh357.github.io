@@ -24,6 +24,8 @@ if row:
     first_name, role = row
     print(f"<h2>Welcome, {first_name} ({role})</h2>")
     print('<a href="chat.html">Go to Chat</a>')
+    if role == 'Godly Derp':
+        print('<a href="search.html">Search Users</a>')
 else:
     print("<h2>Login Failed</h2>")
     print("<p>User not found.</p>")
