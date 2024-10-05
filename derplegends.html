@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Derpi Legends</title>
+</head>
+<body>
+    <h1>Derpi Legends</h1>
+    <div id="login-signup">
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="signup()">Sign Up</button>
+        <button onclick="login()">Login</button>
+    </div>
+    <div id="game" style="display: none;">
+        <h2>Welcome to Derpi Legends</h2>
+        <div id="chat">
+            <div id="messages"></div>
+            <input type="text" id="message" placeholder="Type a message">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+        <div id="clubs">
+            <h3>Clubs</h3>
+            <button onclick="createClub()">Create Club</button>
+            <button onclick="joinClub()">Join Club</button>
+            <div id="club-list"></div>
+        </div>
+        <div id="events">
+            <h3>Events</h3>
+            <button onclick="createEvent()">Create Event</button>
+            <div id="event-list"></div>
+        </div>
+    </div>
+    <script>
+        let users = [];
+        let messages = [];
+        let clubs = [{ name: 'Outrageous Dancers', members: [] }];
+        let events = [];
+        let currentUser = null;
+
+        function signup() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            if (users.find(user => user.email === email)) {
+                alert('User already exists');
+                return;
+            }
+            users.push({ email, password });
+            alert('Signup successful');
+        }
+
+        function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const user = users.find(user => user.email === email && user.password === password);
+            if (user) {
+                currentUser = user;
+                document.getElementById('login-signup').style.display = 'none';
+                document.getElementById('game').style.display = 'block';
+            } else {
+                alert('Invalid credentials');
+            }
+        }
+
+        function sendMessage() {
+            const message = document.getElementById('message').value;
+            messages.push({ user: currentUser.email, message });
+            displayMessages();
+            document.getElementById('message').value = '';
+        }
+
+        function displayMessages() {
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.innerHTML = '';
+            messages.forEach(msg => {
+                const messageElement = document.createElement('div');
+                messageElement.textContent = `${msg.user}: ${msg.message}`;
+                messagesDiv.appendChild(messageElement);
+            });
+        }
+
+        function createClub() {
+            const clubName = prompt('Enter club name:');
+            const clubType = prompt('Enter club type (A, B, or Shared):');
+            clubs.push({ name: clubName, type: clubType, members: [currentUser.email] });
+            displayClubs();
+        }
+
+        function joinClub() {
+            const clubName = prompt('Enter club name to join:');
+            const club = clubs.find(club => club.name === clubName);
+            if (club) {
+                club.members.push(currentUser.email);
+                displayClubs();
+            } else {
+                alert('Club not found');
+            }
+        }
+
+        function displayClubs() {
+            const clubListDiv = document.getElementById('club-list');
+            clubListDiv.innerHTML = '';
+            clubs.forEach(club => {
+                const clubElement = document.createElement('div');
+                clubElement.textContent = `${club.name} (${club.type}) - Members: ${club.members.join(', ')}`;
+                clubListDiv.appendChild(clubElement);
+            });
+        }
+
+        function createEvent() {
+            if (!currentUser || !currentUser.email.endsWith('@admin.com')) {
+                alert('Only Admins can create events');
+                return;
+            }
+            const eventName = prompt('Enter event name:');
+            events.push({ name: eventName, createdBy: currentUser.email });
+            displayEvents();
+        }
+
+        function displayEvents() {
+            const eventListDiv = document.getElementById('event-list');
+            eventListDiv.innerHTML = '';
+            events.forEach(event => {
+                const eventElement = document.createElement('div');
+                eventElement.textContent = `${event.name} - Created by: ${event.createdBy}`;
+                eventListDiv.appendChild(eventElement);
+            });
+        }
+    </script>
+</body>
+</html>
