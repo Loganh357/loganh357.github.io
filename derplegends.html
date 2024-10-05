@@ -33,14 +33,20 @@
         </div>
     </div>
     <script>
-        let users = [{ email: 'hamptonlogan562@gmail.com', password: 'adminpassword' }];
+        let users = JSON.parse(localStorage.getItem('users')) || [{ email: 'hamptonlogan562@gmail.com', password: 'adminpassword' }];
         let messages = [];
-        let clubs = [
+        let clubs = JSON.parse(localStorage.getItem('clubs')) || [
             { name: 'Outrageous Dancers', members: [] },
             { name: 'Admins Club', members: ['hamptonlogan562@gmail.com'] }
         ];
-        let events = [];
+        let events = JSON.parse(localStorage.getItem('events')) || [];
         let currentUser = null;
+
+        function saveData() {
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('clubs', JSON.stringify(clubs));
+            localStorage.setItem('events', JSON.stringify(events));
+        }
 
         function signup() {
             const email = document.getElementById('email').value;
@@ -50,6 +56,7 @@
                 return;
             }
             users.push({ email, password });
+            saveData();
             alert('Signup successful');
         }
 
@@ -61,6 +68,9 @@
                 currentUser = user;
                 document.getElementById('login-signup').style.display = 'none';
                 document.getElementById('game').style.display = 'block';
+                displayMessages();
+                displayClubs();
+                displayEvents();
             } else {
                 alert('Invalid credentials');
             }
@@ -87,6 +97,7 @@
             const clubName = prompt('Enter club name:');
             const clubType = prompt('Enter club type (A, B, or Shared):');
             clubs.push({ name: clubName, type: clubType, members: [currentUser.email] });
+            saveData();
             displayClubs();
         }
 
@@ -95,6 +106,7 @@
             const club = clubs.find(club => club.name === clubName);
             if (club) {
                 club.members.push(currentUser.email);
+                saveData();
                 displayClubs();
             } else {
                 alert('Club not found');
@@ -118,6 +130,7 @@
             }
             const eventName = prompt('Enter event name:');
             events.push({ name: eventName, createdBy: currentUser.email });
+            saveData();
             displayEvents();
         }
 
