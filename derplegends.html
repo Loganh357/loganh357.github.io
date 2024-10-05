@@ -33,9 +33,12 @@
         </div>
     </div>
     <script>
-        let users = [];
+        let users = [{ email: 'hamptonlogan562@gmail.com', password: 'adminpassword' }];
         let messages = [];
-        let clubs = [{ name: 'Outrageous Dancers', members: [] }];
+        let clubs = [
+            { name: 'Outrageous Dancers', members: [] },
+            { name: 'Admins Club', members: ['hamptonlogan562@gmail.com'] }
+        ];
         let events = [];
         let currentUser = null;
 
@@ -109,7 +112,7 @@
         }
 
         function createEvent() {
-            if (!currentUser || !currentUser.email.endsWith('@admin.com')) {
+            if (!currentUser || !clubs.find(club => club.name === 'Admins Club' && club.members.includes(currentUser.email))) {
                 alert('Only Admins can create events');
                 return;
             }
