@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The A.F.C</title>
+</head>
+<body>
+    <h1>Join us: Join the operation: Join Operation Umklammerung.</h1>
+    <form action="chatroom.html" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        <input type="submit" value="Signup">
+    </form>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatroom</title>
+    <style>
+        #chatBox {
+            width: 300px;
+            height: 200px;
+            border: 1px solid black;
+            overflow-y: scroll;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chatroom</h1>
+    <form action="chatroom.html" method="post">
+        <label for="message">Message:</label>
+        <input type="text" id="message" name="message" required><br><br>
+        <input type="submit" value="Send">
+    </form>
+    <div id="chatBox">
+        <!-- Chat messages will appear here -->
+    </div>
+    <div id="memberList">
+        <script>
+            var username = document.getElementById('username').value;
+            if (username === 'flamingdoge' || username === 'commandpro') {
+                var members = ['Member 1', 'Member 2', 'Member 3'];
+                var memberCount = members.length;
+                var memberListHTML = '<h2>Member List</h2><p>Count: ' + memberCount + '</p><table><tr><th>Members</th></tr>';
+                for (var i = 0; i < members.length; i++) {
+                    memberListHTML += '<tr><td>' + members[i] + '</td></tr>';
+                }
+                memberListHTML += '</table>';
+                document.getElementById('memberList').innerHTML = memberListHTML;
+            }
+        </script>
+    </div>
+    <a href="events.html">Events Page</a>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Events Page</title>
+</head>
+<body>
+    <h1>Events Page</h1>
+    <script>
+        var username = document.getElementById('username').value;
+        if (username === 'flamingdoge' || username === 'commandpro') {
+            document.write('<form action="events.html" method="post"><label for="event">Event:</label><input type="text" id="event" name="event" required><br><br><input type="submit" value="Create Event"></form>');
+        } else {
+            document.write('<p>You do not have permission to create events.</p>');
+        }
+    </script>
+</body>
+</html>
