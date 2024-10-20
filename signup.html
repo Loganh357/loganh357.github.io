@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Sign Up / Log In</title>
     <script>
         function signUp() {
             var username = document.getElementById("username").value;
@@ -11,23 +11,41 @@
 
             if(username && password) {
                 var users = JSON.parse(localStorage.getItem("users")) || [];
-                users.push({ username: username });
+                users.push({ username: username, password: password });
                 localStorage.setItem("users", JSON.stringify(users));
                 window.location.href = 'view.html';
             } else {
                 alert("Please fill in both fields.");
             }
         }
+
+        function logIn() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var users = JSON.parse(localStorage.getItem("users")) || [];
+
+            var user = users.find(u => u.username === username && u.password === password);
+            if (user) {
+                localStorage.setItem("currentUser", JSON.stringify(user));
+                window.location.href = 'view.html';
+            } else {
+                alert("Invalid username or password.");
+            }
+        }
     </script>
 </head>
 <body>
-    <h1>Sign Up</h1>
+    <h1>Sign Up / Log In</h1>
     <form onsubmit="event.preventDefault(); signUp();">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required><br><br>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required><br><br>
         <button type="submit">Sign Up</button>
+    </form>
+    <br>
+    <form onsubmit="event.preventDefault(); logIn();">
+        <button type="submit">Log In</button>
     </form>
 </body>
 </html>
