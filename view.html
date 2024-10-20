@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Signed Up Users</title>
+</head>
+<body>
+    <h1>Signed Up Users</h1>
+    <ul id="userList"></ul>
+
+    <script>
+        window.onload = function() {
+            var users = JSON.parse(localStorage.getItem("users")) || [];
+            var userList = document.getElementById("userList");
+
+            users.forEach(function(user) {
+                var li = document.createElement("li");
+                li.textContent = user.username;
+                userList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
