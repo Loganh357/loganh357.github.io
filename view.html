@@ -30,6 +30,8 @@
         <button type="submit">Ban User</button>
     </form>
 
+    <button onclick="resetDatabase()">Reset Database</button>
+
     <script>
         window.onload = function() {
             var users = JSON.parse(localStorage.getItem("users")) || [];
@@ -87,6 +89,19 @@
                 }
             } else {
                 alert("You are not authorized to ban users.");
+            }
+        }
+
+        function resetDatabase() {
+            var authorizedUsers = ["flamingdoge2024", "commandpro1234"];
+            var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+            if (authorizedUsers.includes(currentUser.username)) {
+                localStorage.clear();
+                alert("Database reset successfully!");
+                location.reload();
+            } else {
+                alert("You are not authorized to reset the database.");
             }
         }
     </script>
