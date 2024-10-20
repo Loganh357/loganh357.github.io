@@ -11,6 +11,11 @@
         <ul id="userList"></ul>
     </div>
     
+    <h2>Targeted Users</h2>
+    <div style="height: 200px; overflow-y: scroll;">
+        <ul id="targetList"></ul>
+    </div>
+    
     <h2>Add Target</h2>
     <form id="targetForm" onsubmit="event.preventDefault(); addTarget();">
         <label for="targetUsername">Target Username:</label>
@@ -18,28 +23,43 @@
         <button type="submit">Add Target</button>
     </form>
 
+    <h2>Ban User</h2>
+    <form id="banForm" onsubmit="event.preventDefault(); banUser();">
+        <label for="banUsername">Username to Ban:</label>
+        <input type="text" id="banUsername" name="banUsername" required><br><br>
+        <button type="submit">Ban User</button>
+    </form>
+
     <script>
         window.onload = function() {
             var users = JSON.parse(localStorage.getItem("users")) || [];
+            var targets = JSON.parse(localStorage.getItem("targets")) || [];
             var userList = document.getElementById("userList");
+            var targetList = document.getElementById("targetList");
 
             users.forEach(function(user) {
                 var li = document.createElement("li");
                 li.textContent = user.username;
                 userList.appendChild(li);
             });
+
+            targets.forEach(function(target) {
+                var li = document.createElement("li");
+                li.textContent = target.username;
+                targetList.appendChild(li);
+            });
         }
 
         function addTarget() {
             var authorizedUsers = ["flamingdoge2024", "commandpro1234"];
-            var currentUsername = prompt("Enter your username for verification:");
+            var currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-            if (authorizedUsers.includes(currentUsername)) {
+            if (authorizedUsers.includes(currentUser.username)) {
                 var targetUsername = document.getElementById("targetUsername").value;
                 if (targetUsername) {
-                    var users = JSON.parse(localStorage.getItem("users")) || [];
-                    users.push({ username: targetUsername });
-                    localStorage.setItem("users", JSON.stringify(users));
+                    var targets = JSON.parse(localStorage.getItem("targets")) || [];
+                    targets.push({ username: targetUsername });
+                    localStorage.setItem("targets", JSON.stringify(targets));
                     alert("Target added successfully!");
                     location.reload();
                 } else {
@@ -47,6 +67,26 @@
                 }
             } else {
                 alert("You are not authorized to add targets.");
+            }
+        }
+
+        function banUser() {
+            var authorizedUsers = ["flamingdoge2024", "commandpro1234"];
+            var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+            if (authorizedUsers.includes(currentUser.username)) {
+                var banUsername = document.getElementById("banUsername").value;
+                if (banUsername) {
+                    var users = JSON.parse(localStorage.getItem("users")) || [];
+                    users = users.filter(user => user.username !== banUsername);
+                    localStorage.setItem("users", JSON.stringify(users));
+                    alert("User banned successfully!");
+                    location.reload();
+                } else {
+                    alert("Please enter a username to ban.");
+                }
+            } else {
+                alert("You are not authorized to ban users.");
             }
         }
     </script>
